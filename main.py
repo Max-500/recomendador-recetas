@@ -29,13 +29,15 @@ def main(p0, pmax, pmut, pmut_gen, ngen, sabor):
         aux = 0
         while aux < 5:
             x = numero_aleatorio()
-            if x not in recetas and x != 5:
+            if x not in recetas:
                 recetas.append(x)
                 aux += 1
         individuo = {"recetas": recetas, "aptitud": calcular_aptitud(recetas, sabor)}
         df = df._append(individuo, ignore_index=True)
     
+    #ordena segun aptitud
     df = df.sort_values(by='aptitud')
+    #Bucle de evolución a través de generaciones
     for index in range(ngen):
         mejor, resto = seleccion_mejor_y_resto_individuos(df)
         hijos = cruzas(mejor, resto)
