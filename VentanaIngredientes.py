@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from recetas_completo import recetas
-from ingredientes_completo import ingredientes
+from ingredientes_completo import ingredientes_nuevos as ingredientes
 from variables import actualizar_ingredientes_guardados
 
 class VentanaIngredientes(tk.Toplevel):

@@ -6,21 +6,20 @@ from recetas_completo import obtener_receta_por_id
 
 def numero_aleatorio():
     while True:
-        num = random.randint(1, 100)
-        if num != 5:
-            return num
+        num = random.randint(1, 50)
+        return num
 
-sabor = 'Salado'
 
-def main():
-    p0 = 10
-    pmax = 20
+def main(p0, pmax, pmut, pmut_gen, ngen, sabor):
+    p0 = int(p0)
+    pmax = int(pmax)
     
-    pmut = 0.2
-    pmut_gen = 0.5
+    pmut = float(pmut)
+    pmut_gen = float(pmut_gen)
     
-    ngen = 100
-    
+    ngen = int(ngen)
+    sabor = sabor
+
     df = pd.DataFrame(columns=["recetas", "aptitud"])
     estadisticas_generaciones = pd.DataFrame(columns=['Generacion', 'Mejor', 'Peor', 'Promedio'])
     print(f"Inicio main {variables.ingredientes_guardados}")
@@ -33,7 +32,7 @@ def main():
             if x not in recetas and x != 5:
                 recetas.append(x)
                 aux += 1
-        individuo = {"recetas": recetas, "aptitud": calcular_aptitud(recetas)}
+        individuo = {"recetas": recetas, "aptitud": calcular_aptitud(recetas, sabor)}
         df = df._append(individuo, ignore_index=True)
     
     df = df.sort_values(by='aptitud')
@@ -41,7 +40,7 @@ def main():
         mejor, resto = seleccion_mejor_y_resto_individuos(df)
         hijos = cruzas(mejor, resto)
         hijos_mutados = mutaciones(hijos, pmut, pmut_gen)
-        df = anadir_poblacion(df, hijos_mutados)
+        df = anadir_poblacion(df, hijos_mutados, sabor)
         # Eliminar duplicados
         estadisticas_generaciones = añadir_estadisticas_generacion(df, estadisticas_generaciones, index+1, 'MIN')
         df = df.drop_duplicates(subset=['aptitud'])
@@ -49,7 +48,7 @@ def main():
     graficar_estadisticas(estadisticas_generaciones)
     return df, variables.ingredientes_guardados
 
-def calcular_aptitud(data):
+def calcular_aptitud(data, sabor):
     aptitud = []
     
     for id_receta in data:
@@ -100,9 +99,9 @@ def mutaciones(hijos, pmut, pmut_gen):
                     hijo[i] = numero_aleatorio()
     return hijos
 
-def anadir_poblacion(df, hijos):
+def anadir_poblacion(df, hijos, sabor):
     for hijo in hijos:
-        individuo = {"recetas": hijo, "aptitud": calcular_aptitud(hijo)}
+        individuo = {"recetas": hijo, "aptitud": calcular_aptitud(hijo, sabor)}
         df = df._append(individuo, ignore_index=True)
     df = df.sort_values(by='aptitud')
     return df

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from recetas_completo import obtener_receta_por_id
-from ingredientes_completo import ingredientes as ingredientes_conversion
+from ingredientes_completo import ingredientes_nuevos as ingredientes_conversion
 
 class VentanaResultados(tk.Toplevel):
     def __init__(self, parent, dataframe, ingredientes_usuario):
@@ -66,10 +66,10 @@ class VentanaResultados(tk.Toplevel):
                     label_ingrediente = ttk.Label(content_frame, text=f"{nombre}", wraplength=150)
                     label_ingrediente.grid(row=row, column=platillos, columnspan=2, pady=1, sticky="w")
                     row += 1
+                    cantidad = float(cantidad) / float(ingredientes_conversion[ingrediente['nombre']])
                     label_ingrediente_cantidad = ttk.Label(content_frame, text=f"Cantidad: {cantidad}", wraplength=150)
                     label_ingrediente_cantidad.grid(row=row, column=platillos, columnspan=2, pady=1, sticky="w")
                     row += 1
-
                 
                 label_procedimiento = ttk.Label(content_frame, text='Metodo de Preparación', wraplength=150)
                 label_procedimiento.grid(row=row, column=platillos, pady=1)
@@ -89,8 +89,6 @@ class VentanaResultados(tk.Toplevel):
         for i in range(1, row):
             content_frame.grid_rowconfigure(i, weight=1)
         
-        print(f"Inicio Result {ingredientes_usuario}")
-
         row = 1
         for clave, valor in ingredientes_usuario.items():
             label_nombre = ttk.Label(content_frame, text=f"Nombre: {clave}", wraplength=150)
