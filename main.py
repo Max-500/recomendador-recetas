@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import variables
 import matplotlib.pyplot as plt
-from recetas_completo import recetas, obtener_receta_por_id
+from recetas_completo import obtener_receta_por_id
 
 def numero_aleatorio():
     while True:
@@ -23,9 +23,7 @@ def main():
     
     df = pd.DataFrame(columns=["recetas", "aptitud"])
     estadisticas_generaciones = pd.DataFrame(columns=['Generacion', 'Mejor', 'Peor', 'Promedio'])
-    variables.actualizar_ingredientes_guardados({'pechugas de pollo': 400.0})
-    print(variables.ingredientes_guardados)
-
+    print(f"Inicio main {variables.ingredientes_guardados}")
     # POBLACIÓN INICIAL
     for _ in range(p0):
         recetas = []        
@@ -49,7 +47,7 @@ def main():
         df = df.drop_duplicates(subset=['aptitud'])
         df = df.head(pmax)
     graficar_estadisticas(estadisticas_generaciones)
-    return df.head(1)
+    return df, variables.ingredientes_guardados
 
 def calcular_aptitud(data):
     aptitud = []
@@ -133,7 +131,6 @@ def graficar_estadisticas(df_estadisticas):
     plt.figure(figsize=(10, 6))
 
     # Graficar cada estadística
-    print(df_estadisticas)
     plt.plot(df_estadisticas['Generacion'], df_estadisticas['Mejor'], color='green', label='Mejor')
     plt.plot(df_estadisticas['Generacion'], df_estadisticas['Peor'], color='red', label='Peor')
     plt.plot(df_estadisticas['Generacion'], df_estadisticas['Promedio'], color='blue', label='Promedio')
@@ -148,4 +145,3 @@ def graficar_estadisticas(df_estadisticas):
 
     # Mostrar la gráfica
     plt.show()
-main()

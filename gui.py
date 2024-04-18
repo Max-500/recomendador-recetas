@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from main import main
 from VentanaIngredientes import VentanaIngredientes
+from VentanaResultado import VentanaResultados
 
 def abrir_mi_refrigerador():
     VentanaIngredientes(ventana_principal)
@@ -13,7 +14,8 @@ def load_data():
     probabilidad_mutacion_individuo_val = poblacion_variables["Probabilidad de Mutación del Individuo"].get()
     probabilidad_mutacion_gen_val = poblacion_variables["Probabilidad de Mutación del Gen"].get()
     ngen_val = poblacion_variables["Número de Generaciones"].get()
-    result = main()
+    result, ingredientes_usuario = main()
+    VentanaResultados(ventana_principal, result, ingredientes_usuario)
 
 # Crear la ventana principal
 ventana_principal = tk.Tk()
