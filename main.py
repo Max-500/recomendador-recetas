@@ -87,6 +87,14 @@ def cruzas(mejor, resto):
         hijo1 = mejor['recetas'][:punto_corte] + row['recetas'][punto_corte:]
         hijo2 = mejor['recetas'][punto_corte:] + row['recetas'][:punto_corte]
         
+        while encontrar_repetido(hijo1) != None:
+            pos = encontrar_repetido(hijo1)
+            hijo1[pos] = numero_aleatorio()
+        
+        while encontrar_repetido(hijo2) != None:
+            pos = encontrar_repetido(hijo2)
+            hijo2[pos] = numero_aleatorio()
+        
         hijos.append(hijo1)
         hijos.append(hijo2)
     return hijos
@@ -146,3 +154,12 @@ def graficar_estadisticas(df_estadisticas):
 
     # Mostrar la gráfica
     plt.show()
+    
+def encontrar_repetido(arr):
+    elementos_vistos = {}
+    for i, elemento in enumerate(arr):
+        if elemento in elementos_vistos:
+            return elementos_vistos[elemento]
+        else:
+            elementos_vistos[elemento] = i
+    return None

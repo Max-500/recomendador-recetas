@@ -245,7 +245,7 @@ recetas = [
         "ingredientes": [
             {"id": 1, "nombre": "pollo", "cantidad": 1000},
             {"id": 2, "nombre": "papas", "cantidad": 500},
-            {"id": 3, "nombre": "zanahorias", "cantidad": 300},
+            {"id": 3, "nombre": "zanahoria", "cantidad": 300},
             {"id": 4, "nombre": "cebolla", "cantidad": 200},
             {"id": 5, "nombre": "aceite de oliva", "cantidad": 20},
             {"id": 6, "nombre": "sal", "cantidad": 10},
